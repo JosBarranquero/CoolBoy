@@ -68,5 +68,13 @@ namespace CoolBoy
             _listener.Stop();
             _listener.Close();
         }
+
+        public bool Running
+        {
+            get
+            {
+                return _listener.IsListening;
+            }
+        }
     }
 }
