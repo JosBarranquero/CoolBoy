@@ -28,21 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.lbLog = new System.Windows.Forms.ListBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
+            this.cmsLog = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmClearBox = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmClearFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnPref = new System.Windows.Forms.Button();
+            this.cmsLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbLog
             // 
+            this.lbLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbLog.ContextMenuStrip = this.cmsLog;
             this.lbLog.FormattingEnabled = true;
             this.lbLog.Location = new System.Drawing.Point(12, 12);
             this.lbLog.Name = "lbLog";
             this.lbLog.Size = new System.Drawing.Size(401, 290);
             this.lbLog.TabIndex = 0;
+            this.lbLog.TabStop = false;
             // 
             // btnStart
             // 
+            this.btnStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnStart.Location = new System.Drawing.Point(65, 316);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
@@ -53,28 +66,66 @@
             // 
             // btnStop
             // 
+            this.btnStop.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnStop.Enabled = false;
             this.btnStop.Location = new System.Drawing.Point(282, 316);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 2;
+            this.btnStop.TabIndex = 3;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // cmsLog
+            // 
+            this.cmsLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmClearBox,
+            this.tsmClearFile});
+            this.cmsLog.Name = "cmsLog";
+            this.cmsLog.Size = new System.Drawing.Size(258, 48);
+            // 
+            // tsmClearBox
+            // 
+            this.tsmClearBox.Name = "tsmClearBox";
+            this.tsmClearBox.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.W)));
+            this.tsmClearBox.Size = new System.Drawing.Size(257, 22);
+            this.tsmClearBox.Text = "Clear log &window";
+            this.tsmClearBox.Click += new System.EventHandler(this.tsmClearBox_Click);
+            // 
+            // tsmClearFile
+            // 
+            this.tsmClearFile.Name = "tsmClearFile";
+            this.tsmClearFile.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.F)));
+            this.tsmClearFile.Size = new System.Drawing.Size(257, 22);
+            this.tsmClearFile.Text = "Clear log &file";
+            this.tsmClearFile.Click += new System.EventHandler(this.tsmClearFile_Click);
+            // 
+            // btnPref
+            // 
+            this.btnPref.Location = new System.Drawing.Point(174, 316);
+            this.btnPref.Name = "btnPref";
+            this.btnPref.Size = new System.Drawing.Size(75, 23);
+            this.btnPref.TabIndex = 2;
+            this.btnPref.Text = "Preferences";
+            this.btnPref.UseVisualStyleBackColor = true;
+            this.btnPref.Click += new System.EventHandler(this.btnPref_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(425, 351);
+            this.Controls.Add(this.btnPref);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lbLog);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.Text = "CoolBoy Server";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+            this.cmsLog.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -83,6 +134,10 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnStop;
         public System.Windows.Forms.ListBox lbLog;
+        private System.Windows.Forms.ContextMenuStrip cmsLog;
+        private System.Windows.Forms.ToolStripMenuItem tsmClearBox;
+        private System.Windows.Forms.ToolStripMenuItem tsmClearFile;
+        private System.Windows.Forms.Button btnPref;
     }
 }
 

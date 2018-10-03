@@ -46,5 +46,10 @@ namespace CoolBoy
         {
             File.AppendAllText(string.Format(LOG_FILE, DateTime.Now), message + "\r\n");
         }
+
+        public static void ClearLogFile()
+        {
+            File.WriteAllText(string.Format(LOG_FILE, DateTime.Now), "");
+        }
     }
 }

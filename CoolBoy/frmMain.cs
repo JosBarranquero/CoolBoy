@@ -30,6 +30,12 @@ namespace CoolBoy
             StopServer();
         }
 
+        private void btnPref_Click(object sender, EventArgs e)
+        {
+            frmPreferences preferences = new frmPreferences();
+            preferences.ShowDialog(this);
+        }
+
         /// <summary>
         /// Ask to exit the application and stop the server if it's running
         /// </summary>
@@ -50,7 +56,47 @@ namespace CoolBoy
                 e.Cancel = true;
             }
         }
+
+        private void tsmClearBox_Click(object sender, EventArgs e)
+        {
+            ClearLogBox();
+        }
+
+        private void tsmClearFile_Click(object sender, EventArgs e)
+        {
+            Utilities.ClearLogFile();
+        }
         #endregion
+
+        /// <summary>
+        /// Method which logs a message to screen and file
+        /// </summary>
+        /// <param name="message">Message to log</param>
+        private void LogInfo(string message)
+        {
+            string msg = string.Format("[{0}] - {1}", DateTime.Now, message);
+
+            if (lbLog.InvokeRequired)
+            {
+                lbLog.Invoke(new MethodInvoker(delegate
+                {
+                    lbLog.Items.Add(msg);
+                }));
+            }
+            else
+            {
+                lbLog.Items.Add(msg);
+            }
+            Utilities.Log2File(msg);
+        }
+
+        /// <summary>
+        /// Clear the log box
+        /// </summary>
+        private void ClearLogBox()
+        {
+            lbLog.Items.Clear();
+        }
 
         /// <summary>
         /// Start the server
@@ -64,6 +110,7 @@ namespace CoolBoy
                 server = new WebServer(SendResponse, "http://*/");
                 server.Run();
                 btnStart.Enabled = false;
+                btnPref.Enabled = false;
                 btnStop.Enabled = true;
                 LogInfo("Server started!");
             }
@@ -82,6 +129,7 @@ namespace CoolBoy
             server = null;
 
             btnStart.Enabled = true;
+            btnPref.Enabled = true;
             btnStop.Enabled = false;
 
             LogInfo("Server stopped");
@@ -96,28 +144,6 @@ namespace CoolBoy
         {
             LogInfo(string.Format("Serving {0}", request.RemoteEndPoint.Address));
             return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
-        }
-
-        /// <summary>
-        /// Method which logs a message to screen and file
-        /// </summary>
-        /// <param name="message">Message to log</param>
-        public void LogInfo(string message)
-        {
-            string msg = string.Format("[{0}] - {1}", DateTime.Now, message);
-
-            if (lbLog.InvokeRequired)
-            {
-                lbLog.Invoke(new MethodInvoker(delegate
-                {
-                    lbLog.Items.Add(msg);
-                }));
-            }
-            else
-            {
-                lbLog.Items.Add(msg);
-            }
-            Utilities.Log2File(msg);
         }
     }
 }
