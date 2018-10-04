@@ -31,11 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.lbLog = new System.Windows.Forms.ListBox();
-            this.btnStart = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
             this.cmsLog = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmClearBox = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmClearFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.btnPref = new System.Windows.Forms.Button();
             this.cmsLog.SuspendLayout();
             this.SuspendLayout();
@@ -52,29 +52,6 @@
             this.lbLog.Size = new System.Drawing.Size(401, 290);
             this.lbLog.TabIndex = 0;
             this.lbLog.TabStop = false;
-            // 
-            // btnStart
-            // 
-            this.btnStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnStart.Location = new System.Drawing.Point(65, 316);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 1;
-            this.btnStart.Text = "Start!";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnStop.Enabled = false;
-            this.btnStop.Location = new System.Drawing.Point(282, 316);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 3;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // cmsLog
             // 
@@ -101,6 +78,29 @@
             this.tsmClearFile.Size = new System.Drawing.Size(257, 22);
             this.tsmClearFile.Text = "Clear log &file";
             this.tsmClearFile.Click += new System.EventHandler(this.tsmClearFile_Click);
+            // 
+            // btnStart
+            // 
+            this.btnStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnStart.Location = new System.Drawing.Point(65, 316);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 1;
+            this.btnStart.Text = "Start!";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnStop.Enabled = false;
+            this.btnStop.Location = new System.Drawing.Point(282, 316);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 3;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // btnPref
             // 
