@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CoolBoy
+namespace CoolBoy.Forms
 {
     public partial class frmPreferences : Form
     {

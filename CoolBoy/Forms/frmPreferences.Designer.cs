@@ -1,4 +1,4 @@
-﻿namespace CoolBoy
+﻿namespace CoolBoy.Forms
 {
     partial class frmPreferences
     {
@@ -39,7 +39,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPreferences";
-            this.Text = "frmPreferences";
+            this.Text = "CoolBoy Preferences";
             this.ResumeLayout(false);
 
         }

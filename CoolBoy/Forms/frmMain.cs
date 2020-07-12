@@ -3,11 +3,11 @@ using System.Net;
 using System.Windows.Forms;
 using System.Reflection;
 
-namespace CoolBoy
+namespace CoolBoy.Forms
 {
     public partial class frmMain : Form
     {
-        private WebServer server;
+        private WebServer _server;
 
         #region Form constructor and events
         public frmMain()
@@ -45,7 +45,7 @@ namespace CoolBoy
         {
             if (MessageBox.Show("Do you want to exit the application?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (server == null ? false : server.Running)
+                if (_server == null ? false : _server.Running)
                 {
                     StopServer();
                 }
@@ -65,6 +65,12 @@ namespace CoolBoy
         private void tsmClearFile_Click(object sender, EventArgs e)
         {
             Utilities.ClearLogFile();
+        }
+
+        private void tsmAbout_Click(object sender, EventArgs e)
+        {
+            frmAbout about = new frmAbout();
+            about.ShowDialog(this);
         }
         #endregion
 
@@ -107,8 +113,8 @@ namespace CoolBoy
 
             try
             {
-                server = new WebServer(SendResponse, "http://*/");
-                server.Run();
+                _server = new WebServer(SendResponse, "http://*/");
+                _server.Run();
                 btnStart.Enabled = false;
                 btnPref.Enabled = false;
                 btnStop.Enabled = true;
@@ -125,8 +131,8 @@ namespace CoolBoy
         /// </summary>
         private void StopServer()
         {
-            server.Stop();
-            server = null;
+            _server.Stop();
+            _server = null;
 
             btnStart.Enabled = true;
             btnPref.Enabled = true;
@@ -147,3 +153,4 @@ namespace CoolBoy
         }
     }
 }
+// Namespaces change, about screen

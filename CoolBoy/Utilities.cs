@@ -8,7 +8,7 @@ namespace CoolBoy
 {
     static class Utilities
     {
-        private const string LOG_FILE = "CoolBoy_{0:yyyyMMdd}.log";
+        private const string LOG_FILE = "CoolBoy_{0:yyyyMMdd}.log";     // Log file filename structure
 
         /// <summary>
         /// Method which returns the available IPv4 addresses to set the server on

@@ -1,4 +1,4 @@
-﻿namespace CoolBoy
+﻿namespace CoolBoy.Forms
 {
     partial class frmMain
     {
@@ -37,7 +37,10 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPref = new System.Windows.Forms.Button();
+            this.cmsApplication = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsLog.SuspendLayout();
+            this.cmsApplication.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbLog
@@ -112,11 +115,27 @@
             this.btnPref.UseVisualStyleBackColor = true;
             this.btnPref.Click += new System.EventHandler(this.btnPref_Click);
             // 
+            // cmsApplication
+            // 
+            this.cmsApplication.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmAbout});
+            this.cmsApplication.Name = "cmsApplication";
+            this.cmsApplication.Size = new System.Drawing.Size(133, 26);
+            // 
+            // tsmAbout
+            // 
+            this.tsmAbout.Name = "tsmAbout";
+            this.tsmAbout.ShortcutKeys = System.Windows.Forms.Keys.F10;
+            this.tsmAbout.Size = new System.Drawing.Size(132, 22);
+            this.tsmAbout.Text = "&About";
+            this.tsmAbout.Click += new System.EventHandler(this.tsmAbout_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(425, 351);
+            this.ContextMenuStrip = this.cmsApplication;
             this.Controls.Add(this.btnPref);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
@@ -126,6 +145,7 @@
             this.Text = "CoolBoy Server";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.cmsLog.ResumeLayout(false);
+            this.cmsApplication.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -138,6 +158,8 @@
         private System.Windows.Forms.ToolStripMenuItem tsmClearBox;
         private System.Windows.Forms.ToolStripMenuItem tsmClearFile;
         private System.Windows.Forms.Button btnPref;
+        private System.Windows.Forms.ContextMenuStrip cmsApplication;
+        private System.Windows.Forms.ToolStripMenuItem tsmAbout;
     }
 }
 
