@@ -2,12 +2,14 @@
 using System.Net;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace CoolBoy.Forms
 {
     public partial class frmMain : Form
     {
         private WebServer _server;
+        private Utilities _utilities;
 
         #region Form constructor and events
         public frmMain()
@@ -17,9 +19,12 @@ namespace CoolBoy.Forms
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
             this.Text = String.Format("{0} WebServer - R{1}.{2}", Application.ProductName, version.Major, version.Minor);
 
+            _utilities = Utilities.Instance;
+
             LogInfo("Application started");
         }
 
+        #region Button handling
         private void btnStart_Click(object sender, EventArgs e)
         {
             StartServer();
@@ -35,6 +40,7 @@ namespace CoolBoy.Forms
             frmPreferences preferences = new frmPreferences();
             preferences.ShowDialog(this);
         }
+        #endregion
 
         /// <summary>
         /// Ask to exit the application and stop the server if it's running
@@ -57,6 +63,7 @@ namespace CoolBoy.Forms
             }
         }
 
+        #region Context menu items
         private void tsmClearBox_Click(object sender, EventArgs e)
         {
             ClearLogBox();
@@ -64,7 +71,7 @@ namespace CoolBoy.Forms
 
         private void tsmClearFile_Click(object sender, EventArgs e)
         {
-            Utilities.ClearLogFile();
+            _utilities.ClearLogFile();
         }
 
         private void tsmAbout_Click(object sender, EventArgs e)
@@ -72,6 +79,7 @@ namespace CoolBoy.Forms
             frmAbout about = new frmAbout();
             about.ShowDialog(this);
         }
+        #endregion
         #endregion
 
         /// <summary>
@@ -93,7 +101,7 @@ namespace CoolBoy.Forms
             {
                 lbLog.Items.Add(msg);
             }
-            Utilities.Log2File(msg);
+            _utilities.Log2File(msg);
         }
 
         /// <summary>
@@ -109,11 +117,14 @@ namespace CoolBoy.Forms
         /// </summary>
         private void StartServer()
         {
-            LogInfo("Attempting to start server on *");
+            List<string> ipAddresses = _utilities.GetLocalIPAddresses();
+            string mainAddress = ipAddresses[0];
+
+            LogInfo("Attempting to start server on " + mainAddress);
 
             try
             {
-                _server = new WebServer(SendResponse, "http://*/");
+                _server = new WebServer(SendResponse, "http://" + mainAddress + "/");
                 _server.Run();
                 btnStart.Enabled = false;
                 btnPref.Enabled = false;
