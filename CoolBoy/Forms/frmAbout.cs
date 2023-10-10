@@ -16,7 +16,7 @@ namespace CoolBoy.Forms
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+            this.labelVersion.Text = String.Format("Version {0}.{1}", MajorVersion, MinorVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
@@ -41,11 +41,19 @@ namespace CoolBoy.Forms
             }
         }
 
-        public string AssemblyVersion
+        public string MajorVersion
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                return Assembly.GetExecutingAssembly().GetName().Version.Major.ToString();
+            }
+        }
+
+        public string MinorVersion
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
             }
         }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Forms.VisualStyles;
 
 namespace CoolBoy
 {
@@ -17,7 +19,8 @@ namespace CoolBoy
 
         private Utilities() 
         {
-            WebFolder = AppDomain.CurrentDomain.BaseDirectory;
+			// TODO: Check if config file exists and read it or load defaults
+            WebFolder = AppDomain.CurrentDomain.BaseDirectory + "Resources" + Path.DirectorySeparatorChar;
             StartPage = "index.html";
         }
 
@@ -65,13 +68,48 @@ namespace CoolBoy
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
+        internal string Serve(string rawUrl)
+        {
+            string readFile = string.Empty;
+            
+            if (!string.IsNullOrEmpty(rawUrl))
+            {
+                // Getting the file name of the requested file
+                // For maximum compatibility, path separator is used
+                string requestedFile = rawUrl.Replace('/', Path.DirectorySeparatorChar);
+                
+                // Local file
+                string fileName = WebFolder + Path.DirectorySeparatorChar + requestedFile;
+                string[] lines;
+
+                if (requestedFile.EndsWith(Path.DirectorySeparatorChar.ToString())) // if no file, send the default one
+                    fileName += StartPage;
+
+                if (File.Exists(fileName))      // If the file exists, read it
+                    lines = File.ReadAllLines(fileName);
+                else  // If the file doesn't exist, send 404 error html
+                {
+                    lines = new string[1];
+                    lines[0] = "<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>";
+                    // This is hardcoded, to prevent user tampering
+                }
+
+                foreach (string line in lines)
+                {
+                    readFile += line + Environment.NewLine;
+                }
+            }
+
+            return readFile;
+        }
+
         /// <summary>
         /// Method which logs to a text file
         /// </summary>
         /// <param name="message">Text to log</param>
         public void Log2File(string message)
         {
-            File.AppendAllText(string.Format(LOG_FILE, DateTime.Now), message + "\r\n");
+            File.AppendAllText(string.Format(LOG_FILE, DateTime.Now), message + Environment.NewLine);
         }
 
         /// <summary>

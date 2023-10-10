@@ -9,7 +9,7 @@ namespace CoolBoy.Forms
     public partial class frmMain : Form
     {
         private WebServer _server;
-        private Utilities _utilities;
+        private readonly Utilities _utilities;
 
         #region Form constructor and events
         public frmMain()
@@ -17,7 +17,7 @@ namespace CoolBoy.Forms
             InitializeComponent();
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            this.Text = String.Format("{0} WebServer - R{1}.{2}", Application.ProductName, version.Major, version.Minor);
+            this.Text = String.Format("{0} Webserver - R{1}.{2}", Application.ProductName, version.Major, version.Minor);
 
             _utilities = Utilities.Instance;
 
@@ -90,6 +90,7 @@ namespace CoolBoy.Forms
         {
             string msg = string.Format("[{0}] - {1}", DateTime.Now, message);
 
+			// TODO: Check ListView
             if (lbLog.InvokeRequired)
             {
                 lbLog.Invoke(new MethodInvoker(delegate
@@ -158,9 +159,10 @@ namespace CoolBoy.Forms
         /// <param name="request">Request being made to server</param>
         /// <returns>Response</returns>
         public string SendResponse(HttpListenerRequest request)
-        {
-            LogInfo(string.Format("Serving {0}", request.RemoteEndPoint.Address));
-            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
+        { 
+            LogInfo(string.Format("Serving file {0} to client {1}", request.RawUrl, request.RemoteEndPoint.Address));
+
+            return _utilities.Serve(request.RawUrl);
         }
     }
 }
