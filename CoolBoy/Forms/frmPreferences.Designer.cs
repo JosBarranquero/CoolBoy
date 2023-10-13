@@ -30,16 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPreferences));
             this.gbLocation = new System.Windows.Forms.GroupBox();
+            this.tbxStart = new System.Windows.Forms.TextBox();
+            this.tbxFolder = new System.Windows.Forms.TextBox();
+            this.btnFolder = new System.Windows.Forms.Button();
+            this.lblStart = new System.Windows.Forms.Label();
+            this.lblFolder = new System.Windows.Forms.Label();
             this.gbOptions = new System.Windows.Forms.GroupBox();
-            this.cb = new System.Windows.Forms.CheckBox();
+            this.cbListing = new System.Windows.Forms.CheckBox();
             this.btnDone = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lblFolder = new System.Windows.Forms.Label();
-            this.lblStart = new System.Windows.Forms.Label();
             this.fbdWeb = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnFolder = new System.Windows.Forms.Button();
-            this.tbxFolder = new System.Windows.Forms.TextBox();
-            this.tbxStart = new System.Windows.Forms.TextBox();
             this.gbLocation.SuspendLayout();
             this.gbOptions.SuspendLayout();
             this.SuspendLayout();
@@ -58,9 +58,51 @@
             this.gbLocation.TabStop = false;
             this.gbLocation.Text = "Website location";
             // 
+            // tbxStart
+            // 
+            this.tbxStart.Location = new System.Drawing.Point(75, 89);
+            this.tbxStart.Name = "tbxStart";
+            this.tbxStart.Size = new System.Drawing.Size(381, 20);
+            this.tbxStart.TabIndex = 5;
+            // 
+            // tbxFolder
+            // 
+            this.tbxFolder.Location = new System.Drawing.Point(75, 23);
+            this.tbxFolder.Name = "tbxFolder";
+            this.tbxFolder.Size = new System.Drawing.Size(381, 20);
+            this.tbxFolder.TabIndex = 4;
+            // 
+            // btnFolder
+            // 
+            this.btnFolder.Location = new System.Drawing.Point(343, 55);
+            this.btnFolder.Name = "btnFolder";
+            this.btnFolder.Size = new System.Drawing.Size(113, 23);
+            this.btnFolder.TabIndex = 3;
+            this.btnFolder.Text = "Select web folder";
+            this.btnFolder.UseVisualStyleBackColor = true;
+            this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
+            // 
+            // lblStart
+            // 
+            this.lblStart.AutoSize = true;
+            this.lblStart.Location = new System.Drawing.Point(7, 92);
+            this.lblStart.Name = "lblStart";
+            this.lblStart.Size = new System.Drawing.Size(59, 13);
+            this.lblStart.TabIndex = 2;
+            this.lblStart.Text = "Start page:";
+            // 
+            // lblFolder
+            // 
+            this.lblFolder.AutoSize = true;
+            this.lblFolder.Location = new System.Drawing.Point(7, 26);
+            this.lblFolder.Name = "lblFolder";
+            this.lblFolder.Size = new System.Drawing.Size(62, 13);
+            this.lblFolder.TabIndex = 1;
+            this.lblFolder.Text = "Web folder:";
+            // 
             // gbOptions
             // 
-            this.gbOptions.Controls.Add(this.cb);
+            this.gbOptions.Controls.Add(this.cbListing);
             this.gbOptions.Location = new System.Drawing.Point(12, 146);
             this.gbOptions.Name = "gbOptions";
             this.gbOptions.Size = new System.Drawing.Size(462, 55);
@@ -68,15 +110,15 @@
             this.gbOptions.TabStop = false;
             this.gbOptions.Text = "Website options";
             // 
-            // cb
+            // cbListing
             // 
-            this.cb.AutoSize = true;
-            this.cb.Location = new System.Drawing.Point(10, 23);
-            this.cb.Name = "cb";
-            this.cb.Size = new System.Drawing.Size(203, 17);
-            this.cb.TabIndex = 0;
-            this.cb.Text = "Send file listing if there\'s no start page";
-            this.cb.UseVisualStyleBackColor = true;
+            this.cbListing.AutoSize = true;
+            this.cbListing.Location = new System.Drawing.Point(10, 23);
+            this.cbListing.Name = "cbListing";
+            this.cbListing.Size = new System.Drawing.Size(203, 17);
+            this.cbListing.TabIndex = 0;
+            this.cbListing.Text = "Send file listing if there\'s no start page";
+            this.cbListing.UseVisualStyleBackColor = true;
             // 
             // btnDone
             // 
@@ -97,48 +139,6 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // lblFolder
-            // 
-            this.lblFolder.AutoSize = true;
-            this.lblFolder.Location = new System.Drawing.Point(7, 26);
-            this.lblFolder.Name = "lblFolder";
-            this.lblFolder.Size = new System.Drawing.Size(62, 13);
-            this.lblFolder.TabIndex = 1;
-            this.lblFolder.Text = "Web folder:";
-            // 
-            // lblStart
-            // 
-            this.lblStart.AutoSize = true;
-            this.lblStart.Location = new System.Drawing.Point(7, 92);
-            this.lblStart.Name = "lblStart";
-            this.lblStart.Size = new System.Drawing.Size(59, 13);
-            this.lblStart.TabIndex = 2;
-            this.lblStart.Text = "Start page:";
-            // 
-            // btnFolder
-            // 
-            this.btnFolder.Location = new System.Drawing.Point(343, 55);
-            this.btnFolder.Name = "btnFolder";
-            this.btnFolder.Size = new System.Drawing.Size(113, 23);
-            this.btnFolder.TabIndex = 3;
-            this.btnFolder.Text = "Select web folder";
-            this.btnFolder.UseVisualStyleBackColor = true;
-            this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
-            // 
-            // tbxFolder
-            // 
-            this.tbxFolder.Location = new System.Drawing.Point(75, 23);
-            this.tbxFolder.Name = "tbxFolder";
-            this.tbxFolder.Size = new System.Drawing.Size(381, 20);
-            this.tbxFolder.TabIndex = 4;
-            // 
-            // tbxStart
-            // 
-            this.tbxStart.Location = new System.Drawing.Point(75, 89);
-            this.tbxStart.Name = "tbxStart";
-            this.tbxStart.Size = new System.Drawing.Size(381, 20);
-            this.tbxStart.TabIndex = 5;
             // 
             // frmPreferences
             // 
@@ -166,7 +166,7 @@
 
         private System.Windows.Forms.GroupBox gbLocation;
         private System.Windows.Forms.GroupBox gbOptions;
-        private System.Windows.Forms.CheckBox cb;
+        private System.Windows.Forms.CheckBox cbListing;
         private System.Windows.Forms.TextBox tbxStart;
         private System.Windows.Forms.TextBox tbxFolder;
         private System.Windows.Forms.Button btnFolder;

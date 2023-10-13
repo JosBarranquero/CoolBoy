@@ -19,7 +19,8 @@ namespace CoolBoy
 
         private Utilities() 
         {
-			// TODO: Check if config file exists and read it or load defaults
+            // TODO: Check if config file exists and read it or load defaults
+            // For maximum compatibility, directory separator is used
             WebFolder = AppDomain.CurrentDomain.BaseDirectory + "Resources" + Path.DirectorySeparatorChar;
             StartPage = "index.html";
         }
@@ -75,7 +76,7 @@ namespace CoolBoy
             if (!string.IsNullOrEmpty(rawUrl))
             {
                 // Getting the file name of the requested file
-                // For maximum compatibility, path separator is used
+                // For maximum compatibility, directory separator is used
                 string requestedFile = rawUrl.Replace('/', Path.DirectorySeparatorChar);
                 
                 // Local file
