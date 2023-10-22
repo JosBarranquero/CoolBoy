@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,12 +18,39 @@ namespace CoolBoy
         private string webFolder;
         private string startPage;
 
+        private Configuration config;
+
         private Utilities() 
         {
-            // TODO: Check if config file exists and read it or load defaults
+            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             // For maximum compatibility, directory separator is used
-            WebFolder = AppDomain.CurrentDomain.BaseDirectory + "Resources" + Path.DirectorySeparatorChar;
-            StartPage = "index.html";
+            try
+            {
+                webFolder = config.AppSettings.Settings["WebFolder"].Value;
+                startPage = config.AppSettings.Settings["StartPage"].Value;
+            }
+            catch (NullReferenceException)  // Issue loading the file (it doesn't exist)
+            {
+                CreateConfigFile();     // Create the configuration file
+                config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);    // reload
+
+                webFolder = ""; // set default which will be overwritten later
+                startPage = "";
+
+            } 
+            finally     // always check for default values
+            {
+                if (WebFolder.Equals(""))
+                {
+                    WebFolder = AppDomain.CurrentDomain.BaseDirectory + "Resources" + Path.DirectorySeparatorChar;
+                }
+
+                if (StartPage.Equals(""))
+                {
+                    StartPage = "index.html";
+                }
+            }
         }
 
         public static Utilities Instance
@@ -38,8 +66,31 @@ namespace CoolBoy
             }
         }
 
-        public string WebFolder { get => webFolder; set => webFolder = value; }
-        public string StartPage { get => startPage; set => startPage = value; }
+        public string WebFolder 
+        { 
+            get => webFolder; 
+            
+            set // Save the setting to file as well
+            {
+                webFolder = value;
+                config.AppSettings.Settings["WebFolder"].Value = value;
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            } 
+        }
+
+        public string StartPage
+        {
+            get => startPage;
+
+            set // Save the setting to file as well
+            {
+                startPage = value;
+                config.AppSettings.Settings["StartPage"].Value = value;
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+        }
 
         /// <summary>
         /// Method which returns the available IPv4 addresses to set the server on
@@ -119,6 +170,25 @@ namespace CoolBoy
         public void ClearLogFile()
         {
             File.WriteAllText(string.Format(LOG_FILE, DateTime.Now), "");
+        }
+
+        /// <summary>
+        /// Method which creates a Configuration File with default settings
+        /// </summary>
+        private void CreateConfigFile()
+        {
+            string fileName = AppDomain.CurrentDomain.FriendlyName + ".Config";
+            string fileContents = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + Environment.NewLine +
+                "<configuration>" + Environment.NewLine +
+                "    <startup>" + Environment.NewLine +
+                "        <supportedRuntime version=\"v4.0\" sku=\".NETFramework,Version=v4.8\"/>" + Environment.NewLine +
+                "    </startup>" + Environment.NewLine +
+                "    <appSettings>" + Environment.NewLine +
+                "        <add key=\"WebFolder\" value=\"\" />" + Environment.NewLine +
+                "        <add key=\"StartPage\" value=\"\" />" + Environment.NewLine +
+                "    </appSettings> " + Environment.NewLine +
+                "</configuration>";
+            File.WriteAllText(fileName, fileContents);
         }
     }
 }

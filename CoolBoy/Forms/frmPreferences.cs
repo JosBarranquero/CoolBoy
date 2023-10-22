@@ -41,6 +41,7 @@ namespace CoolBoy.Forms
             if (!tbxFolder.Text.EndsWith(Path.DirectorySeparatorChar.ToString()))
                 tbxFolder.Text += Path.DirectorySeparatorChar;
 
+            // If directory selected doesn't exist, inform the user and abort closing the window
             if (!Directory.Exists(tbxFolder.Text))
             {
                 MessageBox.Show("The selected folder doesn't exist", "Folder error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

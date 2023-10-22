@@ -1,3 +1,5 @@
+![CoolBoy icon](./CoolBoy/Resources/coolboy.ico)
+
 # CoolBoy
 This is a simple web server, based on [PoorMan](https://www.haiku-os.org/docs/userguide/en/applications/poorman.html), written in C# as a testing tool.
 
