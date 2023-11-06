@@ -2,15 +2,16 @@
 using System.Net;
 using System.Threading;
 using System.Text;
+using System.Runtime.Remoting.Contexts;
 
 namespace CoolBoy
 {
     public class WebServer
     {
         private readonly HttpListener _listener = new HttpListener();
-        private readonly Func<HttpListenerRequest, string> _responderMethod;
+        private readonly Func<HttpListenerRequest, byte[]> _responderMethod;
 
-        public WebServer(string[] prefixes, Func<HttpListenerRequest, string> method)
+        public WebServer(string[] prefixes, Func<HttpListenerRequest, byte[]> method)
         {
             if (!HttpListener.IsSupported)
                 throw new NotSupportedException(
@@ -28,7 +29,7 @@ namespace CoolBoy
             _listener.Start();
         }
 
-        public WebServer(Func<HttpListenerRequest, string> method, params string[] prefixes)
+        public WebServer(Func<HttpListenerRequest, byte[]> method, params string[] prefixes)
             : this(prefixes, method) { }
 
         public void Run()
@@ -45,12 +46,24 @@ namespace CoolBoy
                             var ctx = c as HttpListenerContext;
                             try
                             {
-                                string rstr = _responderMethod(ctx.Request);
-                                byte[] buf = Encoding.UTF8.GetBytes(rstr);
-                                ctx.Response.ContentLength64 = buf.Length;
-                                ctx.Response.OutputStream.Write(buf, 0, buf.Length);
+                                byte[] buf = _responderMethod(ctx.Request);
+
+                                if (buf == null)
+                                    ctx.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                else
+                                {
+                                    // Set the length of the response, write it, set the status code and flush for cleanliness
+                                    ctx.Response.ContentLength64 = buf.Length;
+                                    ctx.Response.OutputStream.Write(buf, 0, buf.Length);
+                                    ctx.Response.StatusCode = (int)HttpStatusCode.OK;
+                                    ctx.Response.OutputStream.Flush();
+                                }
                             }
-                            catch { throw; } // suppress any exceptions
+                            catch // There's some error!
+                            {
+                                ctx.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                throw; 
+                            }
                             finally
                             {
                                 // always close the stream

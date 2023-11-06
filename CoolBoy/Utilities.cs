@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Windows.Forms.VisualStyles;
 
 namespace CoolBoy
@@ -120,35 +121,32 @@ namespace CoolBoy
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
-        internal string Serve(string rawUrl)
+        internal byte[] Serve(string rawUrl)
         {
-            string readFile = string.Empty;
+            byte[] readFile = null;
             
             if (!string.IsNullOrEmpty(rawUrl))
             {
                 // Getting the file name of the requested file
                 // For maximum compatibility, directory separator is used
                 string requestedFile = rawUrl.Replace('/', Path.DirectorySeparatorChar);
-                
+
                 // Local file
                 string fileName = WebFolder + Path.DirectorySeparatorChar + requestedFile;
-                string[] lines;
 
                 if (requestedFile.EndsWith(Path.DirectorySeparatorChar.ToString())) // if no file, send the default one
                     fileName += StartPage;
 
-                if (File.Exists(fileName))      // If the file exists, read it
-                    lines = File.ReadAllLines(fileName);
+                if (File.Exists(fileName)) {     // If the file exists, read it
+                    Stream input = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                    readFile = new byte[input.Length];
+                    input.Read(readFile, 0, readFile.Length);
+                    input.Close();
+                }
                 else  // If the file doesn't exist, send 404 error html
                 {
-                    lines = new string[1];
-                    lines[0] = "<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>";
+                    readFile = Encoding.UTF8.GetBytes("<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>");
                     // This is hardcoded, to prevent user tampering
-                }
-
-                foreach (string line in lines)
-                {
-                    readFile += line + Environment.NewLine;
                 }
             }
 

@@ -158,7 +158,7 @@ namespace CoolBoy.Forms
         /// </summary>
         /// <param name="request">Request being made to server</param>
         /// <returns>Response</returns>
-        public string SendResponse(HttpListenerRequest request)
+        public byte[] SendResponse(HttpListenerRequest request)
         { 
             LogInfo(string.Format("Serving file {0} to client {1}", request.RawUrl, request.RemoteEndPoint.Address));
 
